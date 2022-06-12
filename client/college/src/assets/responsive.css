@@ -1,0 +1,188 @@
+/* normal desktop */
+@media only screen and (min-width: 1024px) {}
+
+
+/* tablets */
+@media only screen and (min-width:768px) and (max-width: 1023px) {
+  .nav ul {
+    flex-wrap: wrap;
+    padding: 0px 148px;
+  }
+
+  .nav .nav-icon {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    text-align: center;
+  }
+
+  nav .nav-menu li ul {
+    visibility: hidden;
+    position: relative;
+    display: none;
+    background: white;
+  }
+
+  nav .nav-menu li ul {
+    padding: 8px;
+  }
+
+  .active {
+    display: block;
+  }
+
+  .hero-section,
+  .benefits-section,
+  .count-students-section,
+  .faculties-section,
+  .bacelor-faculty-section,
+  .bacelor-faculty-programs,
+  .departments-section {
+    justify-content: center;
+  }
+
+  .hero-section-content {
+    padding-bottom: 28px;
+  }
+
+  .count-students {
+    text-align: center;
+  }
+
+  .count-students-section-content {
+    padding-bottom: 24px;
+  }
+
+  .count-students-section-img {
+    text-align: center;
+  }
+
+  .bacelor-faculty-content {
+    padding-bottom: 24px;
+  }
+
+  .bacelor-faculty-content {
+    width: 100%;
+  }
+
+  .contact-section-content {
+    display: block;
+
+  }
+
+  .contact-form-contect {
+    width: 100%;
+  }
+
+  .contact-section-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 28px;
+  }
+
+  .footer-columns {
+    flex-wrap: wrap;
+  }
+
+  .footer-columns>article {
+    padding: 22px 30px;
+  }
+
+}
+
+/* phones */
+@media only screen and (min-width:320px) and (max-width: 767px) {
+  .nav ul {
+    flex-wrap: wrap;
+    padding: 0px 148px;
+  }
+
+  .nav .nav-icon {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    text-align: center;
+  }
+
+  nav .nav-menu li ul {
+    visibility: hidden;
+    position: relative;
+    display: none;
+    background: white;
+  }
+
+  nav .nav-menu li ul{
+    padding: 4px 0px;
+  }
+
+  .active {
+    display: block;
+  }
+
+  .hero-section,
+  .benefits-section,
+  .count-students-section,
+  .faculties-section,
+  .bacelor-faculty-section,
+  .bacelor-faculty-programs,
+  .departments-section {
+    justify-content: center;
+  }
+
+  .hero-section-content {
+    padding-bottom: 28px;
+  }
+
+  .count-students-section-content {
+    padding-bottom: 24px;
+  }
+
+  .count-students {
+    text-align: center;
+  }
+
+  .bacelor-faculty-content {
+    padding-bottom: 24px;
+  }
+
+  .bacelor-faculty-content {
+    width: 100%;
+  }
+
+  .bacelor-faculty-section,
+  .bacelor-faculty-programs {
+    justify-content: center;
+  }
+
+  .contact-section-content {
+    display: block;
+
+  }
+
+  .contact-form-contect {
+    width: 100%;
+  }
+
+  .contact-section-image {
+    padding-top: 28px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-columns {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-columns>article {
+    padding: 22px 30px;
+  }
+}
