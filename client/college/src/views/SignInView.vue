@@ -1,26 +1,45 @@
+<script>
+import { inject } from 'vue'
+
+export default {
+  name: 'SignIn',
+  data() {
+    return {
+      username: "",
+      password: ""
+    }
+  },
+  setup() {
+    const axios = inject('axios')
+  },
+  methods: {
+    submit() {
+      const credentials = { username: this.username, password: this.password };
+
+      this.axios
+        .post(`http://localhost/api/signIn`, credentials)
+        .then((response) => {
+          console.log(response.status)
+          console.log(response.data["token"])
+        });
+    }
+  }
+}
+</script>
+
 <template>
   <section class="signin">
     <h1>Sign in</h1>
-    <form method="post">
+    <form>
       <div class="txt-field">
-        <input type="text" required />
+        <input v-model="username" type="text" required />
         <label>Username</label>
       </div>
       <div class="txt-field">
-        <input type="password" required />
+        <input v-model="password" type="password" required />
         <label>Password</label>
       </div>
-      <div class="select">
-        <select>
-          <option value="0">Log in as:</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-      </div>
-      <div class="forgot-password">Forgot Password?</div>
-      <input type="submit" value="Sign in" />
-      <div class="signup-link">You do not have an account?<RouterLink to="/signUp">Sign up</RouterLink></div>
+      <button @click="submit" type='button'>Sign in</button>
     </form>
   </section>
 </template>

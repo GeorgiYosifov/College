@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"net/http"
 
 	"github.com/GeorgiYosifov/College/interfaces"
 	"github.com/GeorgiYosifov/College/models"
@@ -26,9 +27,10 @@ func (ctr *AuthenticationController) SignIn(context *gin.Context) {
 		log.Fatal(err)
 	}
 
-	if err = ctr.AuthenticationService.SignIn(info); err != nil {
-		log.Fatal(err)
+	token := ctr.AuthenticationService.SignIn(info)
+	if token != "" {
+		context.JSON(http.StatusOK, models.SignInResponse{Token: token})
+	} else {
+		context.JSON(http.StatusUnauthorized, nil)
 	}
-
-	context.Status(201)
 }

@@ -14,33 +14,32 @@ type AuthenticationService struct {
 	interfaces.AuthenticationService
 }
 
-func (s *AuthenticationService) SignIn(info models.SignInRequest) error {
-	db, err := sql.Open("mysql", "u:p@/databasename")
+func (s *AuthenticationService) SignIn(info models.SignInRequest) string {
+	db, err := sql.Open("mysql", "root:oracle-mysql-pass@/College")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	var name string
-	rows, err := db.Query("SELECT username FROM students WHERE username = ?", "Georgi")
+	rows, err := db.Query("SELECT username, role FROM users WHERE username = ? AND password = ?", info.Username, info.Password)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer rows.Close()
 
+	var username, role, token string
 	for rows.Next() {
-		err = rows.Scan(&name)
+		err = rows.Scan(&username, &role)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(name)
-	}
 
+		token = GenerateToken(username, role)
+	}
 	err = rows.Err()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return nil
+	return token
 }

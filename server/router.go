@@ -1,12 +1,14 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"sync"
 
 	"github.com/GeorgiYosifov/College/controllers"
 	"github.com/GeorgiYosifov/College/services"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,6 +17,22 @@ type Router interface {
 }
 
 type router struct{}
+
+func AuthorizeJWT() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		const BEARER_SCHEMA = "Bearer"
+		authHeader := c.GetHeader("Authorization")
+		tokenString := authHeader[len(BEARER_SCHEMA):]
+		token, err := services.ValidateToken(tokenString)
+		if token.Valid {
+			claims := token.Claims.(jwt.MapClaims)
+			log.Println(claims)
+		} else {
+			log.Println(err)
+			c.AbortWithStatus(http.StatusUnauthorized)
+		}
+	}
+}
 
 func AllowOriginMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
