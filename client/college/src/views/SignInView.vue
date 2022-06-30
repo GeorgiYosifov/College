@@ -16,11 +16,14 @@ export default {
     submit() {
       const credentials = { username: this.username, password: this.password };
 
+      // this.axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token")
+
       this.axios
         .post(`http://localhost/api/signIn`, credentials)
         .then((response) => {
-          console.log(response.status)
-          console.log(response.data["token"])
+          if (response.status === 200) {
+            localStorage.setItem("token", response.data["token"]);
+          }
         });
     }
   }

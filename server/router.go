@@ -20,7 +20,7 @@ type router struct{}
 
 func AuthorizeJWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		const BEARER_SCHEMA = "Bearer"
+		const BEARER_SCHEMA = "Bearer "
 		authHeader := c.GetHeader("Authorization")
 		tokenString := authHeader[len(BEARER_SCHEMA):]
 		token, err := services.ValidateToken(tokenString)
@@ -56,11 +56,7 @@ func (router *router) InitRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(AllowOriginMiddleware())
 
-	//r.GET("/api/repository/:name/available", repositoryController.GetAvailableCharts)
-	//r.GET("/api/repository", repositoryController.GetRepositories)
-	r.POST("/api/signIn", authenticationController.SignIn)
-	//r.PATCH("/api/chart", chartController.Upgrade)
-	//r.DELETE("/api/chart", chartController.Uninstall)
+	r.POST("/api/signIn", authenticationController.SignIn) // , AuthorizeJWT()
 
 	return r
 }
