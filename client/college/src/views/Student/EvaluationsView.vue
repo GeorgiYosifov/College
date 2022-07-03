@@ -2,10 +2,10 @@
 import { inject } from 'vue'
 
 export default {
-  name: 'Evaluations',
+  name: 'studentEvaluations',
   data() {
     return {
-      courses: {}
+      courses: []
     }
   },
   setup() {
@@ -19,10 +19,10 @@ export default {
       this.axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token")
 
       this.axios
-        .get(`http://localhost/api/courses`)
+        .get(`http://localhost/api/` + this.$route.params.semester + `/courses`)
         .then((response) => {
           if (response.status === 200) {
-            this.semesters = response.data
+            this.courses = response.data
           }
         });
     }
@@ -31,18 +31,6 @@ export default {
 </script>
 
 <template>
-  <ul class="secondary-menu">
-    <li class="nav-links">
-      <RouterLink to="/studentSemesters"><span>Semesters</span></RouterLink>
-    </li>
-    <li class="nav-links">
-      <RouterLink to="/studentCurriculum"><span>Curriculum</span></RouterLink>
-    </li>
-    <li class="nav-links">
-      <RouterLink to="/studentEvaluations"><span>Evaluations</span></RouterLink>
-    </li>
-  </ul>
-
   <section id="" class="login-students">
     <article class="enrollment-semestar">
       <h1 class="secondary-title">Evaluations</h1>
@@ -55,14 +43,13 @@ export default {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>001</td>
-            <td>Linear algebra</td>
-            <td>T1 (Test work) <br>
-              T2 (Test work) <br>
-              T3 (Presence and participation) <br>
-              TO (Final assessment) <br>
-              I1 (Exam)
+          <tr v-for="course in courses">
+            <td>{{ course.name }}</td>
+            <td>{{ course.teacher }}</td>
+            <td>
+              <div v-for="task in course.tasks">
+                {{ task }} <br>
+              </div>
             </td>
           </tr>
         </tbody>

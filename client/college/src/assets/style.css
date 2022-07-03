@@ -1023,3 +1023,22 @@ padding-bottom: 22px;
   color: #EBEBEB;
   font-size: 12px;
 }
+
+button[type="button"] {
+  width: 100%;
+  height: 50px;
+  border: none;
+  background: #F4A024;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #181818;
+  cursor: pointer;
+  outline: none;
+  transition: 0.5s;
+  margin-bottom: 20px;
+}
+
+button[type="button"]:hover {
+  transform: scale(1.1);
+}

@@ -11,11 +11,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type InventoryService struct {
-	interfaces.InventoryService
+type StudentService struct {
+	interfaces.StudentService
 }
 
-func (s *InventoryService) GetSemesters(username interface{}) []int {
+func (s *StudentService) GetSemesters(username interface{}) []int {
 	db, err := sql.Open("mysql", "root:oracle-mysql-pass@/College")
 	if err != nil {
 		log.Fatal(err)
@@ -46,20 +46,20 @@ func (s *InventoryService) GetSemesters(username interface{}) []int {
 	return semesters
 }
 
-func (s *InventoryService) GetCourses() []models.Course {
+func (s *StudentService) GetCourses(semester string) []models.StudentCourse {
 	db, err := sql.Open("mysql", "root:oracle-mysql-pass@/College")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT Courses.name, Users.username, GROUP_CONCAT(Tasks.name SEPARATOR ', ') FROM Users INNER JOIN SemestersUsers ON Users.username=SemestersUsers.username INNER JOIN Semesters ON Semesters.id=SemestersUsers.semesterId INNER JOIN Courses ON Courses.semester=Semesters.id INNER JOIN Tasks ON Tasks.courseId=Courses.name WHERE Users.role = \"Teacher\" GROUP BY Courses.name, Users.username")
+	rows, err := db.Query("SELECT Courses.name, Users.username, GROUP_CONCAT(Tasks.name SEPARATOR ', ') FROM Users INNER JOIN SemestersUsers ON Users.username=SemestersUsers.username INNER JOIN Semesters ON Semesters.id=SemestersUsers.semesterId INNER JOIN Courses ON Courses.semester=Semesters.id LEFT JOIN Tasks ON Tasks.courseId=Courses.name WHERE Users.role = \"Teacher\" AND Semesters.number = ? GROUP BY Courses.name, Users.username", semester)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
 
-	var courses []models.Course
+	var courses []models.StudentCourse
 	var name, username string
 	var tasksAsBytes []uint8
 	for rows.Next() {
@@ -69,7 +69,7 @@ func (s *InventoryService) GetCourses() []models.Course {
 		}
 
 		tasks := strings.Split(string(tasksAsBytes), ", ")
-		courses = append(courses, models.Course{Name: name, Teacher: username, Tasks: tasks})
+		courses = append(courses, models.StudentCourse{Name: name, Teacher: username, Tasks: tasks})
 	}
 	err = rows.Err()
 	if err != nil {

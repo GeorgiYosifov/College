@@ -2,7 +2,7 @@ package interfaces
 
 import "github.com/GeorgiYosifov/College/models"
 
-type InventoryService interface {
+type StudentService interface {
 	GetSemesters(username interface{}) []int
-	GetCourses() []models.Course
+	GetCourses(semester string) []models.StudentCourse
 }

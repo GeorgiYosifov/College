@@ -15,14 +15,24 @@ const router = createRouter({
       component: () => import("../views/Student/SemestersView.vue"),
     },
     {
-      path: "/studentCurriculum",
-      name: "studentCurriculum",
-      component: () => import("../views/Student/CurriculumView.vue"),
-    },
-    {
-      path: "/studentEvaluations",
+      path: "/studentEvaluations/:semester",
       name: "studentEvaluations",
       component: () => import("../views/Student/EvaluationsView.vue"),
+    },
+    {
+      path: "/teacherEvaluations",
+      name: "teacherEvaluations",
+      component: () => import("../views/Teacher/EvaluationsView.vue"),
+    },
+    {
+      path: "/teacherEvaluationsCourse",
+      name: "teacherEvaluationsCourse",
+      component: () => import("../views/Teacher/EvaluationsCourseView.vue"),
+    },
+    {
+      path: "/teacherCourseDescription",
+      name: "teacherCourseDescription",
+      component: () => import("../views/Teacher/CourseDescriptionView.vue"),
     },
     {
       path: "/signIn",

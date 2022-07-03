@@ -10,22 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type InventoryController struct {
-	InventoryService interfaces.InventoryService
+type StudentController struct {
+	StudentService interfaces.StudentService
 }
 
-func (ctr *InventoryController) Semesters(context *gin.Context) {
+func (ctr *StudentController) Semesters(context *gin.Context) {
 	const BEARER_SCHEMA = "Bearer "
 	authHeader := context.GetHeader("Authorization")
 	tokenString := authHeader[len(BEARER_SCHEMA):]
 	token, _ := services.ValidateToken(tokenString)
 	claims := token.Claims.(jwt.MapClaims)
 
-	semesters := ctr.InventoryService.GetSemesters(claims["username"])
+	semesters := ctr.StudentService.GetSemesters(claims["username"])
 	context.JSON(http.StatusOK, semesters)
 }
 
-func (ctr *InventoryController) Courses(context *gin.Context) {
-	courses := ctr.InventoryService.GetCourses()
+func (ctr *StudentController) Courses(context *gin.Context) {
+	courses := ctr.StudentService.GetCourses(context.Param("semester"))
 	context.JSON(http.StatusOK, courses)
 }

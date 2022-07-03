@@ -2,7 +2,7 @@
 import { inject } from 'vue'
 
 export default {
-  name: 'Semesters',
+  name: 'studentSemesters',
   data() {
     return {
       semesters: {}
@@ -31,23 +31,11 @@ export default {
 </script>
 
 <template>
-  <ul class="secondary-menu">
-    <li class="nav-links">
-      <RouterLink to="/studentSemesters"><span>Semesters</span></RouterLink>
-    </li>
-    <li class="nav-links">
-      <RouterLink to="/studentCurriculum"><span>Curriculum</span></RouterLink>
-    </li>
-    <li class="nav-links">
-      <RouterLink to="/studentEvaluations"><span>Evaluations</span></RouterLink>
-    </li>
-  </ul>
-
   <section id="" class="login-students">
       <article class="past-semesters">
         <h1 class="secondary-title">Semesters</h1>
           <h4 class="semesters" v-for="semester in semesters">
-            <RouterLink to="/studentCurriculum">semester {{ semester }}</RouterLink>
+            <RouterLink :to="`/studentEvaluations/${semester}`">semester {{ semester }}</RouterLink>
           </h4>
       </article>
   </section>

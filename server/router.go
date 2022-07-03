@@ -52,16 +52,21 @@ func (router *router) InitRouter() *gin.Engine {
 	authenticationController := controllers.AuthenticationController{
 		AuthenticationService: &services.AuthenticationService{},
 	}
-	InventoryController := controllers.InventoryController{
-		InventoryService: &services.InventoryService{},
+	StudentController := controllers.StudentController{
+		StudentService: &services.StudentService{},
+	}
+	TeacherController := controllers.TeacherController{
+		TeacherService: &services.TeacherService{},
 	}
 
 	r := gin.Default()
 	r.Use(AllowOriginMiddleware())
 
 	r.POST("/api/signIn", authenticationController.SignIn)
-	r.GET("/api/semesters", AuthorizeJWT(), InventoryController.Semesters)
-	r.GET("/api/courses", AuthorizeJWT(), InventoryController.Courses)
+	r.GET("/api/semesters", AuthorizeJWT(), StudentController.Semesters)
+	r.GET("/api/:semester/courses", AuthorizeJWT(), StudentController.Courses)
+	r.GET("/api/teacher/courses", AuthorizeJWT(), TeacherController.Courses)
+	r.GET("/api/teacher/students", AuthorizeJWT(), TeacherController.StudentsByCourse)
 
 	return r
 }
