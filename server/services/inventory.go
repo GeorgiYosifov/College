@@ -43,3 +43,11 @@ func (s *InventoryService) GetSemesters(username interface{}) []int {
 
 	return semesters
 }
+
+SELECT College.Courses.name, College.Users.username, GROUP_CONCAT(College.Tasks.name SEPARATOR ', ') FROM College.Users
+INNER JOIN College.SemestersUsers ON College.Users.username=College.SemestersUsers.username
+INNER JOIN College.Semesters ON College.Semesters.id=College.SemestersUsers.semesterId
+INNER JOIN College.Courses ON College.Courses.semester=College.Semesters.id
+INNER JOIN College.Tasks ON College.Tasks.courseId=College.Courses.name
+WHERE College.Users.role = "Teacher"
+GROUP BY College.Courses.name, College.Users.username

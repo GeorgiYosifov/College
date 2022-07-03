@@ -1,4 +1,16 @@
 <template>
+  <ul class="secondary-menu">
+    <li class="nav-links">
+      <RouterLink to="/studentSemesters"><span>Semesters</span></RouterLink>
+    </li>
+    <li class="nav-links">
+      <RouterLink to="/studentCurriculum"><span>Curriculum</span></RouterLink>
+    </li>
+    <li class="nav-links">
+      <RouterLink to="/studentEvaluations"><span>Evaluations</span></RouterLink>
+    </li>
+  </ul>
+
   <section id="" class="login-students">
     <article class="enrollment-semestar">
       <h1 class="secondary-title">Enrollment on courses</h1>
