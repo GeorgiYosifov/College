@@ -61,6 +61,7 @@ func (router *router) InitRouter() *gin.Engine {
 
 	r.POST("/api/signIn", authenticationController.SignIn)
 	r.GET("/api/semesters", AuthorizeJWT(), InventoryController.Semesters)
+	r.GET("/api/courses", AuthorizeJWT(), InventoryController.Courses)
 
 	return r
 }

@@ -24,3 +24,8 @@ func (ctr *InventoryController) Semesters(context *gin.Context) {
 	semesters := ctr.InventoryService.GetSemesters(claims["username"])
 	context.JSON(http.StatusOK, semesters)
 }
+
+func (ctr *InventoryController) Courses(context *gin.Context) {
+	courses := ctr.InventoryService.GetCourses()
+	context.JSON(http.StatusOK, courses)
+}

@@ -3,8 +3,10 @@ package services
 import (
 	"database/sql"
 	"log"
+	"strings"
 
 	"github.com/GeorgiYosifov/College/interfaces"
+	"github.com/GeorgiYosifov/College/models"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -44,10 +46,35 @@ func (s *InventoryService) GetSemesters(username interface{}) []int {
 	return semesters
 }
 
-SELECT College.Courses.name, College.Users.username, GROUP_CONCAT(College.Tasks.name SEPARATOR ', ') FROM College.Users
-INNER JOIN College.SemestersUsers ON College.Users.username=College.SemestersUsers.username
-INNER JOIN College.Semesters ON College.Semesters.id=College.SemestersUsers.semesterId
-INNER JOIN College.Courses ON College.Courses.semester=College.Semesters.id
-INNER JOIN College.Tasks ON College.Tasks.courseId=College.Courses.name
-WHERE College.Users.role = "Teacher"
-GROUP BY College.Courses.name, College.Users.username
+func (s *InventoryService) GetCourses() []models.Course {
+	db, err := sql.Open("mysql", "root:oracle-mysql-pass@/College")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	rows, err := db.Query("SELECT Courses.name, Users.username, GROUP_CONCAT(Tasks.name SEPARATOR ', ') FROM Users INNER JOIN SemestersUsers ON Users.username=SemestersUsers.username INNER JOIN Semesters ON Semesters.id=SemestersUsers.semesterId INNER JOIN Courses ON Courses.semester=Semesters.id INNER JOIN Tasks ON Tasks.courseId=Courses.name WHERE Users.role = \"Teacher\" GROUP BY Courses.name, Users.username")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	var courses []models.Course
+	var name, username string
+	var tasksAsBytes []uint8
+	for rows.Next() {
+		err = rows.Scan(&name, &username, &tasksAsBytes)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		tasks := strings.Split(string(tasksAsBytes), ", ")
+		courses = append(courses, models.Course{Name: name, Teacher: username, Tasks: tasks})
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return courses
+}
