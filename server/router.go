@@ -52,11 +52,15 @@ func (router *router) InitRouter() *gin.Engine {
 	authenticationController := controllers.AuthenticationController{
 		AuthenticationService: &services.AuthenticationService{},
 	}
+	InventoryController := controllers.InventoryController{
+		InventoryService: &services.InventoryService{},
+	}
 
 	r := gin.Default()
 	r.Use(AllowOriginMiddleware())
 
-	r.POST("/api/signIn", authenticationController.SignIn) // , AuthorizeJWT()
+	r.POST("/api/signIn", authenticationController.SignIn)
+	r.GET("/api/semesters", AuthorizeJWT(), InventoryController.Semesters)
 
 	return r
 }

@@ -31,6 +31,6 @@ func (ctr *AuthenticationController) SignIn(context *gin.Context) {
 	if token != "" {
 		context.JSON(http.StatusOK, models.SignInResponse{Token: token})
 	} else {
-		context.JSON(http.StatusUnauthorized, nil)
+		context.JSON(http.StatusBadRequest, nil)
 	}
 }

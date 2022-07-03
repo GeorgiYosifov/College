@@ -67,11 +67,30 @@
   .bacelor-faculty-content {
     width: 100%;
   }
-
+  .about-section-content-paragraph{
+    width: 100%;
+    padding-bottom: 22px;
+    display: flex;
+    justify-content: center;
+  }
+  .about-section-content-img{
+    display: flex;
+    justify-content: center;
+  }
   .contact-section-content {
     display: block;
 
   }
+.specialty-section{
+display: flex;
+  justify-content: center;
+padding-bottom: 18px;
+}
+.specialty-content {
+    width: 100%;
+padding-bottom: 12px;
+
+}
 
   .contact-form-contect {
     width: 100%;
@@ -160,7 +179,25 @@
   .bacelor-faculty-programs {
     justify-content: center;
   }
-
+.about-section-content-paragraph{
+    width: 100%;
+    padding-bottom: 22px;
+    display: flex;
+    justify-content: center;
+  }
+  .about-section-content-img{
+    display: flex;
+    justify-content: center;
+  }
+.specialty-section{
+display: flex;
+  justify-content: center;
+padding-bottom: 18px;
+}
+.specialty-content {
+    width: 100%;
+padding-bottom: 12px;
+}
   .contact-section-content {
     display: block;
 
@@ -176,7 +213,7 @@
     display: flex;
     justify-content: center;
   }
-
+  
   .footer-columns {
     flex-wrap: wrap;
     justify-content: center;
